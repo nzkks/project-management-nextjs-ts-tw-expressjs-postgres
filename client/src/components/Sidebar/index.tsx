@@ -3,14 +3,19 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import {
+  AlertCircle as AlertCircleIcon,
+  AlertOctagon as AlertOctagonIcon,
+  AlertTriangle as AlertTriangleIcon,
   Briefcase as TimelineIcon,
   ChevronUp as ChevronUpIcon,
   ChevronDown as ChevronDownIcon,
   Home as HomeIcon,
+  Layers3 as BacklogIcon,
   LockIcon,
   LucideIcon,
   Search as SearchIcon,
   Settings as SettingsIcon,
+  ShieldAlert as ShieldAlertIcon,
   User as UserIcon,
   Users as TeamIcon,
   X as CloseIcon,
@@ -18,6 +23,7 @@ import {
 
 const Sidebar = () => {
   const [showProjects, setShowProjects] = useState(true);
+  const [showPriority, setShowPriority] = useState(true);
 
   return (
     <div className="fixed z-40 flex h-full flex-col justify-between overflow-y-auto bg-white shadow-xl transition-all duration-300 dark:bg-black">
@@ -69,10 +75,46 @@ const Sidebar = () => {
         {/* PROJECTS LIST */}
 
         {/* PRIORITIES LINKS */}
-        <button className="flex w-full items-center justify-between px-8 py-3 text-gray-500">
+        <button
+          onClick={() => setShowPriority((prev) => !prev)}
+          className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
+        >
           <span className="">Priority</span>
-          <ChevronDownIcon className="size-5" />
+          {showPriority ? (
+            <ChevronUpIcon className="size-5" />
+          ) : (
+            <ChevronDownIcon className="size-5" />
+          )}
         </button>
+        {showPriority && (
+          <>
+            <SidebarLink
+              icon={AlertCircleIcon}
+              label="Urgent"
+              href="/priority/urgent"
+            />
+            <SidebarLink
+              icon={ShieldAlertIcon}
+              label="High"
+              href="/priority/high"
+            />
+            <SidebarLink
+              icon={AlertTriangleIcon}
+              label="Medium"
+              href="/priority/medium"
+            />
+            <SidebarLink
+              icon={AlertOctagonIcon}
+              label="Low"
+              href="/priority/low"
+            />
+            <SidebarLink
+              icon={BacklogIcon}
+              label="Backlog"
+              href="/priority/backlog"
+            />
+          </>
+        )}
       </div>
       <div className="z-10 mt-32 flex w-full flex-col items-center gap-4 bg-white px-8 py-4 md:hidden dark:bg-black">
         <div className="flex w-full items-center">
