@@ -1,7 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   Briefcase as TimelineIcon,
+  ChevronUp as ChevronUpIcon,
   ChevronDown as ChevronDownIcon,
   Home as HomeIcon,
   LockIcon,
@@ -14,6 +17,8 @@ import {
 } from "lucide-react";
 
 const Sidebar = () => {
+  const [showProjects, setShowProjects] = useState(true);
+
   return (
     <div className="fixed z-40 flex h-full flex-col justify-between overflow-y-auto bg-white shadow-xl transition-all duration-300 dark:bg-black">
       <div className="flex size-full flex-col justify-start">
@@ -50,9 +55,16 @@ const Sidebar = () => {
         </nav>
 
         {/* PROJECTS LINKS */}
-        <button className="flex w-full items-center justify-between px-8 py-3 text-gray-500">
+        <button
+          onClick={() => setShowProjects((prev) => !prev)}
+          className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
+        >
           <span className="">Projects</span>
-          <ChevronDownIcon className="size-5" />
+          {showProjects ? (
+            <ChevronUpIcon className="size-5" />
+          ) : (
+            <ChevronDownIcon className="size-5" />
+          )}
         </button>
         {/* PROJECTS LIST */}
 
