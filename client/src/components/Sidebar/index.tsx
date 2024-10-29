@@ -22,21 +22,42 @@ import {
   X as CloseIcon,
 } from "lucide-react";
 
+import { useAppDispatch, useAppSelector } from "@/app/redux";
+import { setIsSidebarCollapsed } from "@/state";
+
 const Sidebar = () => {
   const [showProjects, setShowProjects] = useState(true);
   const [showPriority, setShowPriority] = useState(true);
 
+  const dispatch = useAppDispatch();
+
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed,
+  );
+
+  const sidebarClassNames = `fixed flex flex-col h-[100%] justify-between shadow-xl
+    transition-all duration-300 h-full z-40 dark:bg-black overflow-y-auto bg-white
+    ${isSidebarCollapsed ? "w-0 hidden" : "w-64"}
+  `;
+
   return (
-    <div className="fixed z-40 flex h-full flex-col justify-between overflow-y-auto bg-white shadow-xl transition-all duration-300 dark:bg-black">
+    <div className={sidebarClassNames}>
       <div className="flex size-full flex-col justify-start">
         {/* TOP LOGO */}
         <div className="z-50 flex min-h-[56px] w-64 items-center justify-between bg-white px-6 pt-3 dark:bg-black">
           <div className="text-xl font-bold text-gray-800 dark:text-white">
             My LIST
           </div>
-          <button className="py-3">
-            <CloseIcon className="h-6 w-6 text-gray-800 hover:text-gray-500 dark:text-white" />
-          </button>
+          {isSidebarCollapsed ? null : (
+            <button
+              onClick={() => {
+                dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+              }}
+              className="py-3"
+            >
+              <CloseIcon className="h-6 w-6 text-gray-800 hover:text-gray-500 dark:text-white" />
+            </button>
+          )}
         </div>
         {/* TEAM */}
         <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
