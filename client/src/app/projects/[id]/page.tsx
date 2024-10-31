@@ -1,11 +1,19 @@
 import React from "react";
 
+import ProjectHeader from "@/components/project/ProjectHeader";
+
 type Props = {
   params: { id: string };
 };
 
 const Project = ({ params: { id } }: Props) => {
-  return <div className="dark:text-white">Project {id}</div>;
+  return (
+    <div>
+      <ProjectHeader />
+
+      {/* tab content */}
+    </div>
+  );
 };
 
 export default Project;
