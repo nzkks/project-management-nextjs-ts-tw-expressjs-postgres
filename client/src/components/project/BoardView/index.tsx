@@ -80,6 +80,12 @@ const Task = ({ task }: TaskProps) => {
         />
       )}
       <div className="p-4 md:p-6">
+        <div className="flex items-start justify-between">
+          <div className="flex flex-1 flex-wrap items-center gap-2">
+            {task.priority && <PriorityTag priority={task.priority} />}
+          </div>
+        </div>
+
         <div className="my-3 flex justify-between">
           <h4 className="text-md font-bold dark:text-white">{task.title}</h4>
         </div>
@@ -90,5 +96,23 @@ const Task = ({ task }: TaskProps) => {
     </div>
   );
 };
+
+const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => (
+  <div
+    className={`rounded-full px-2 py-1 text-xs font-semibold ${
+      priority === "Urgent"
+        ? "bg-red-200 text-red-700"
+        : priority === "High"
+          ? "bg-yellow-200 text-yellow-700"
+          : priority === "Medium"
+            ? "bg-green-200 text-green-700"
+            : priority === "Low"
+              ? "bg-blue-200 text-blue-700"
+              : "bg-gray-200 text-gray-700"
+    }`}
+  >
+    {priority}
+  </div>
+);
 
 export default BoardView;
