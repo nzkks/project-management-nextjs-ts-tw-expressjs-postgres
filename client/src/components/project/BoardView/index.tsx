@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Task as TaskType } from "@/state/api";
+import Image from "next/image";
 
 const taskStatus = ["To Do", "Work In Progress", "Under Review", "Completed"];
 
@@ -69,6 +70,15 @@ type TaskProps = {
 const Task = ({ task }: TaskProps) => {
   return (
     <div className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary`}>
+      {task.attachments && task.attachments.length > 0 && (
+        <Image
+          src={`/${task.attachments[0].fileURL}`}
+          alt={task.attachments[0].fileName}
+          width={400}
+          height={200}
+          className="h-auto w-full rounded-t-md"
+        />
+      )}
       <div className="p-4 md:p-6">
         <div className="my-3 flex justify-between">
           <h4 className="text-md font-bold dark:text-white">{task.title}</h4>
