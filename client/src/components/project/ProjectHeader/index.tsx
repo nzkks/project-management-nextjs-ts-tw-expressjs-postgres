@@ -1,12 +1,14 @@
 import React from "react";
 
+import Header from "@/components/Header";
+
 type Props = {};
 
 const ProjectHeader = (props: Props) => {
   return (
     <div className="px-4 xl:px-6">
       <div className="pb-6 pt-6 lg:pb-4 lg:pt-8">
-        <h1>Project Header</h1>
+        <Header name="Project Name" />
       </div>
 
       {/* TABS */}

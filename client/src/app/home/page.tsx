@@ -5,6 +5,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { useGetTasksQuery } from "@/state/api";
 import { useAppSelector } from "../redux";
+import Header from "@/components/Header";
 
 const taskColumns: GridColDef[] = [
   { field: "title", headerName: "Title", width: 200 },
@@ -28,9 +29,7 @@ const HomePage = () => {
   return (
     <div className="container h-full w-[100%] bg-gray-100 bg-transparent p-8">
       <div className="mb-5 w-full">
-        <h1 className="text-2xl font-semibold dark:text-white">
-          Project Management Dashboard
-        </h1>
+        <Header name="Project Management Dashboard" />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="rounded-lg bg-white p-4 shadow dark:bg-dark-secondary md:col-span-2">
