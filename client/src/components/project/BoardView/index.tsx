@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { format } from "date-fns";
+import { MessageSquareMoreIcon } from "lucide-react";
 
 import { Task as TaskType } from "@/state/api";
 
@@ -78,6 +79,8 @@ const Task = ({ task }: TaskProps) => {
     ? format(new Date(task.dueDate), "P")
     : "";
 
+  const numberOfComments = (task.comments && task.comments.length) || 0;
+
   return (
     <div className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary`}>
       {task.attachments && task.attachments.length > 0 && (
@@ -148,7 +151,10 @@ const Task = ({ task }: TaskProps) => {
             )}
           </div>
           <div className="flex items-center text-gray-500 dark:text-neutral-500">
-            {/* no of comments */}
+            <MessageSquareMoreIcon size={20} />
+            <span className="ml-1 text-sm dark:text-neutral-400">
+              {numberOfComments}
+            </span>
           </div>
         </div>
       </div>
