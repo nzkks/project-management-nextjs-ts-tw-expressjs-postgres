@@ -7,13 +7,14 @@ import { useGetTasksQuery } from "@/state/api";
 import ProjectHeader from "@/components/project/ProjectHeader";
 import TableView from "@/components/project/TableView";
 import ListView from "@/components/project/ListView";
+import TimelineView from "@/components/project/TimelineView";
 
 type Props = {
   params: { id: string };
 };
 
 const Project = ({ params: { id } }: Props) => {
-  const [activeTab, setActiveTab] = useState("List");
+  const [activeTab, setActiveTab] = useState("Timeline");
 
   const {
     data: tasks,
@@ -30,6 +31,7 @@ const Project = ({ params: { id } }: Props) => {
 
       {/* tabs content */}
       {activeTab === "List" && <ListView tasks={tasks} />}
+      {activeTab === "Timeline" && <TimelineView tasks={tasks} />}
       {activeTab === "Table" && <TableView tasks={tasks} />}
     </div>
   );

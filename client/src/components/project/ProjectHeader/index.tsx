@@ -1,5 +1,9 @@
 import React, { ReactNode } from "react";
-import { List as ListIcon, Table as TableIcon } from "lucide-react";
+import {
+  Clock as TimelineIcon,
+  List as ListIcon,
+  Table as TableIcon,
+} from "lucide-react";
 
 import Header from "@/components/Header";
 
@@ -25,12 +29,18 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
             setActiveTab={setActiveTab}
           />
           <TabButton
+            name="Timeline"
+            icon={<TimelineIcon className="h-5 w-5" />}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <TabButton
             name="Table"
             icon={<TableIcon className="h-5 w-5" />}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
-          Board view / Timeline view
+          Board view
         </div>
         <div className="flex items-center gap-2">
           Filter button / Share button / Search Task input
