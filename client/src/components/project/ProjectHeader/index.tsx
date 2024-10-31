@@ -1,4 +1,5 @@
-import React from "react";
+import React, { ReactNode } from "react";
+import { Table } from "lucide-react";
 
 import Header from "@/components/Header";
 
@@ -14,13 +15,28 @@ const ProjectHeader = (props: Props) => {
       {/* TABS */}
       <div className="flex flex-wrap-reverse gap-2 border-y border-gray-200 pb-[8px] pt-2 dark:border-stroke-dark md:items-center">
         <div className="flex flex-1 items-center gap-2 md:gap-4">
-          Board view / List view / Timeline view / Table view
+          <TabButton name="Table" icon={<Table className="h-5 w-5" />} />
+          Board view / List view / Timeline view
         </div>
         <div className="flex items-center gap-2">
           Filter button / Share button / Search Task input
         </div>
       </div>
     </div>
+  );
+};
+
+type TabButtonProps = {
+  name: string;
+  icon: ReactNode;
+};
+
+const TabButton = ({ name, icon }: TabButtonProps) => {
+  return (
+    <button className="relative flex items-center gap-2 px-1 py-2 text-gray-500 after:absolute after:-bottom-[9px] after:left-0 after:h-[1px] after:w-full hover:text-blue-600 dark:text-neutral-500 dark:hover:text-white sm:px-2 lg:px-4">
+      {icon}
+      {name}
+    </button>
   );
 };
 

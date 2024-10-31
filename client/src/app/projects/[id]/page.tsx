@@ -1,6 +1,7 @@
 import React from "react";
 
 import ProjectHeader from "@/components/project/ProjectHeader";
+import TableView from "@/components/project/TableView";
 
 type Props = {
   params: { id: string };
@@ -11,7 +12,8 @@ const Project = ({ params: { id } }: Props) => {
     <div>
       <ProjectHeader />
 
-      {/* tab content */}
+      {/* tabs content */}
+      <TableView />
     </div>
   );
 };
