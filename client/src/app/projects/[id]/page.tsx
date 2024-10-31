@@ -8,13 +8,14 @@ import ProjectHeader from "@/components/project/ProjectHeader";
 import TableView from "@/components/project/TableView";
 import ListView from "@/components/project/ListView";
 import TimelineView from "@/components/project/TimelineView";
+import BoardView from "@/components/project/BoardView";
 
 type Props = {
   params: { id: string };
 };
 
 const Project = ({ params: { id } }: Props) => {
-  const [activeTab, setActiveTab] = useState("Timeline");
+  const [activeTab, setActiveTab] = useState("Board");
 
   const {
     data: tasks,
@@ -30,6 +31,7 @@ const Project = ({ params: { id } }: Props) => {
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* tabs content */}
+      {activeTab === "Board" && <BoardView tasks={tasks} />}
       {activeTab === "List" && <ListView tasks={tasks} />}
       {activeTab === "Timeline" && <TimelineView tasks={tasks} />}
       {activeTab === "Table" && <TableView tasks={tasks} />}

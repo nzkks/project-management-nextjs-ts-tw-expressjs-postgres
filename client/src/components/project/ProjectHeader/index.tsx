@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import {
   Clock as TimelineIcon,
+  Grid3X3 as BoardIcon,
   List as ListIcon,
   Table as TableIcon,
 } from "lucide-react";
@@ -23,6 +24,12 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
       <div className="flex flex-wrap-reverse gap-2 border-y border-gray-200 pb-[8px] pt-2 dark:border-stroke-dark md:items-center">
         <div className="flex flex-1 items-center gap-2 md:gap-4">
           <TabButton
+            name="Board"
+            icon={<BoardIcon className="h-5 w-5" />}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <TabButton
             name="List"
             icon={<ListIcon className="h-5 w-5" />}
             activeTab={activeTab}
@@ -40,7 +47,6 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
-          Board view
         </div>
         <div className="flex items-center gap-2">
           Filter button / Share button / Search Task input
