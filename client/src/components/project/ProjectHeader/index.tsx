@@ -1,11 +1,14 @@
 import React, { ReactNode } from "react";
-import { Table } from "lucide-react";
+import { Table as TableIcon } from "lucide-react";
 
 import Header from "@/components/Header";
 
-type Props = {};
+type Props = {
+  activeTab: string;
+  setActiveTab: (tabName: string) => void;
+};
 
-const ProjectHeader = (props: Props) => {
+const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
   return (
     <div className="px-4 xl:px-6">
       <div className="pb-6 pt-6 lg:pb-4 lg:pt-8">
@@ -15,8 +18,13 @@ const ProjectHeader = (props: Props) => {
       {/* TABS */}
       <div className="flex flex-wrap-reverse gap-2 border-y border-gray-200 pb-[8px] pt-2 dark:border-stroke-dark md:items-center">
         <div className="flex flex-1 items-center gap-2 md:gap-4">
-          <TabButton name="Table" icon={<Table className="h-5 w-5" />} />
-          Board view / List view / Timeline view
+          <TabButton
+            name="Table"
+            icon={<TableIcon className="h-5 w-5" />}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          Board view / Timeline view
         </div>
         <div className="flex items-center gap-2">
           Filter button / Share button / Search Task input
@@ -29,11 +37,20 @@ const ProjectHeader = (props: Props) => {
 type TabButtonProps = {
   name: string;
   icon: ReactNode;
+  activeTab: string;
+  setActiveTab: (tabName: string) => void;
 };
 
-const TabButton = ({ name, icon }: TabButtonProps) => {
+const TabButton = ({ name, icon, activeTab, setActiveTab }: TabButtonProps) => {
+  const isActive = activeTab === name;
+
   return (
-    <button className="relative flex items-center gap-2 px-1 py-2 text-gray-500 after:absolute after:-bottom-[9px] after:left-0 after:h-[1px] after:w-full hover:text-blue-600 dark:text-neutral-500 dark:hover:text-white sm:px-2 lg:px-4">
+    <button
+      className={`relative flex items-center gap-2 px-1 py-2 text-gray-500 after:absolute after:-bottom-[9px] after:left-0 after:h-[1px] after:w-full hover:text-blue-600 dark:text-neutral-500 dark:hover:text-white sm:px-2 lg:px-4 ${
+        isActive ? "text-blue-600 after:bg-blue-600 dark:text-white" : ""
+      }`}
+      onClick={() => setActiveTab(name)}
+    >
       {icon}
       {name}
     </button>

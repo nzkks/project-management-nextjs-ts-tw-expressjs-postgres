@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { useGetTasksQuery } from "@/state/api";
 
@@ -12,6 +12,8 @@ type Props = {
 };
 
 const Project = ({ params: { id } }: Props) => {
+  const [activeTab, setActiveTab] = useState("Table");
+
   const {
     data: tasks,
     error,
@@ -23,10 +25,10 @@ const Project = ({ params: { id } }: Props) => {
 
   return (
     <div>
-      <ProjectHeader />
+      <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* tabs content */}
-      <TableView tasks={tasks} />
+      {activeTab === "Table" && <TableView tasks={tasks} />}
     </div>
   );
 };
