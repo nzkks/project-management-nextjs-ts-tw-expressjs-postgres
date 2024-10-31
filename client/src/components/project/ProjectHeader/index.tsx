@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Table as TableIcon } from "lucide-react";
+import { List as ListIcon, Table as TableIcon } from "lucide-react";
 
 import Header from "@/components/Header";
 
@@ -18,6 +18,12 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
       {/* TABS */}
       <div className="flex flex-wrap-reverse gap-2 border-y border-gray-200 pb-[8px] pt-2 dark:border-stroke-dark md:items-center">
         <div className="flex flex-1 items-center gap-2 md:gap-4">
+          <TabButton
+            name="List"
+            icon={<ListIcon className="h-5 w-5" />}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
           <TabButton
             name="Table"
             icon={<TableIcon className="h-5 w-5" />}

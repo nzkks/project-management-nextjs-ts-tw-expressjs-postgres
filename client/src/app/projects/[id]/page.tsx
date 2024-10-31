@@ -6,13 +6,14 @@ import { useGetTasksQuery } from "@/state/api";
 
 import ProjectHeader from "@/components/project/ProjectHeader";
 import TableView from "@/components/project/TableView";
+import ListView from "@/components/project/ListView";
 
 type Props = {
   params: { id: string };
 };
 
 const Project = ({ params: { id } }: Props) => {
-  const [activeTab, setActiveTab] = useState("Table");
+  const [activeTab, setActiveTab] = useState("List");
 
   const {
     data: tasks,
@@ -28,6 +29,7 @@ const Project = ({ params: { id } }: Props) => {
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* tabs content */}
+      {activeTab === "List" && <ListView tasks={tasks} />}
       {activeTab === "Table" && <TableView tasks={tasks} />}
     </div>
   );
