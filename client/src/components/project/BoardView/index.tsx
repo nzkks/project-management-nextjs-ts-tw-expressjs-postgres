@@ -1,7 +1,8 @@
 import React from "react";
+import Image from "next/image";
+import { format } from "date-fns";
 
 import { Task as TaskType } from "@/state/api";
-import Image from "next/image";
 
 const taskStatus = ["To Do", "Work In Progress", "Under Review", "Completed"];
 
@@ -70,6 +71,13 @@ type TaskProps = {
 const Task = ({ task }: TaskProps) => {
   const taskTagsSplit = task.tags ? task.tags.split(",") : [];
 
+  const formattedStartDate = task.startDate
+    ? format(new Date(task.startDate), "P")
+    : "";
+  const formattedDueDate = task.dueDate
+    ? format(new Date(task.dueDate), "P")
+    : "";
+
   return (
     <div className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary`}>
       {task.attachments && task.attachments.length > 0 && (
@@ -105,6 +113,11 @@ const Task = ({ task }: TaskProps) => {
               {task.points} pts
             </div>
           )}
+        </div>
+
+        <div className="text-xs text-gray-500 dark:text-neutral-500">
+          {formattedStartDate && <span>{formattedStartDate} - </span>}
+          {formattedDueDate && <span>{formattedDueDate}</span>}
         </div>
         <p className="text-sm text-gray-600 dark:text-neutral-500">
           {task.description}
