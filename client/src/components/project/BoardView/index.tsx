@@ -1,9 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { format } from "date-fns";
 import { MessageSquareMoreIcon } from "lucide-react";
 
-import { Task as TaskType } from "@/state/api";
+import { Task as TaskType, useUpdateTaskStatusMutation } from "@/state/api";
 
 const taskStatus = ["To Do", "Work In Progress", "Under Review", "Completed"];
 
@@ -19,25 +21,52 @@ type Props = {
 };
 
 const BoardView = ({ tasks }: Props) => {
+  const [updateTaskStatus] = useUpdateTaskStatusMutation();
+
+  const moveTask = (taskId: number, toStatus: string) => {
+    updateTaskStatus({ taskId, status: toStatus });
+  };
+
   return (
-    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
-      {taskStatus.map((status) => (
-        <TaskColumn key={status} status={status} tasks={tasks} />
-      ))}
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
+        {taskStatus.map((status) => (
+          <TaskColumn
+            key={status}
+            status={status}
+            tasks={tasks}
+            moveTask={moveTask}
+          />
+        ))}
+      </div>
+    </DndProvider>
   );
 };
 
 type TaskColumnProps = {
   status: string;
   tasks: TaskType[];
+  moveTask: (taskId: number, toStatus: string) => void;
 };
 
-const TaskColumn = ({ status, tasks }: TaskColumnProps) => {
+const TaskColumn = ({ status, tasks, moveTask }: TaskColumnProps) => {
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: "task",
+    drop: (item: { id: number }) => moveTask(item.id, status),
+    collect: (monitor: any) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
   const tasksCount = tasks?.filter((task) => task.status === status).length;
 
   return (
-    <div className={`sl:py-4 rounded-lg py-2 xl:px-2`}>
+    <div
+      ref={(instance) => {
+        drop(instance);
+      }}
+      className={`sl:py-4 rounded-lg py-2 xl:px-2 ${isOver ? "bg-blue-100 dark:bg-neutral-950" : ""}`}
+    >
       <div className="mb-3 flex w-full">
         <div
           className={`w-2 !bg-[${statusColor[status]}] rounded-s-lg`}
@@ -70,6 +99,14 @@ type TaskProps = {
 };
 
 const Task = ({ task }: TaskProps) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "task",
+    item: { id: task.id },
+    collect: (monitor: any) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   const taskTagsSplit = task.tags ? task.tags.split(",") : [];
 
   const formattedStartDate = task.startDate
@@ -82,7 +119,14 @@ const Task = ({ task }: TaskProps) => {
   const numberOfComments = (task.comments && task.comments.length) || 0;
 
   return (
-    <div className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary`}>
+    <div
+      ref={(instance) => {
+        drag(instance);
+      }}
+      className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary ${
+        isDragging ? "opacity-50" : "opacity-100"
+      }`}
+    >
       {task.attachments && task.attachments.length > 0 && (
         <Image
           src={`/${task.attachments[0].fileURL}`}

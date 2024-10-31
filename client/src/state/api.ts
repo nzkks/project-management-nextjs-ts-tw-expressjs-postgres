@@ -78,7 +78,21 @@ export const api = createApi({
           ? result.map(({ id }) => ({ type: "Tasks" as const, id }))
           : [{ type: "Tasks" as const }],
     }),
+    updateTaskStatus: build.mutation<Task, { taskId: number; status: string }>({
+      query: ({ taskId, status }) => ({
+        url: `tasks/${taskId}/status`,
+        method: "PATCH",
+        body: { status },
+      }),
+      invalidatesTags: (result, error, { taskId }) => [
+        { type: "Tasks", id: taskId },
+      ],
+    }),
   }),
 });
 
-export const { useGetProjectsQuery, useGetTasksQuery } = api;
+export const {
+  useGetProjectsQuery,
+  useGetTasksQuery,
+  useUpdateTaskStatusMutation,
+} = api;
