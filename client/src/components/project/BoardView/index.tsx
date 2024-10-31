@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Task } from "@/state/api";
+import { Task as TaskType } from "@/state/api";
 
 const taskStatus = ["To Do", "Work In Progress", "Under Review", "Completed"];
 
@@ -12,7 +12,7 @@ const statusColor: any = {
 };
 
 type Props = {
-  tasks: Task[];
+  tasks: TaskType[];
 };
 
 const BoardView = ({ tasks }: Props) => {
@@ -27,7 +27,7 @@ const BoardView = ({ tasks }: Props) => {
 
 type TaskColumnProps = {
   status: string;
-  tasks: Task[];
+  tasks: TaskType[];
 };
 
 const TaskColumn = ({ status, tasks }: TaskColumnProps) => {
@@ -53,7 +53,30 @@ const TaskColumn = ({ status, tasks }: TaskColumnProps) => {
         </div>
       </div>
 
-      {/* Tasks */}
+      {tasks
+        .filter((task) => task.status === status)
+        .map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
+    </div>
+  );
+};
+
+type TaskProps = {
+  task: TaskType;
+};
+
+const Task = ({ task }: TaskProps) => {
+  return (
+    <div className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary`}>
+      <div className="p-4 md:p-6">
+        <div className="my-3 flex justify-between">
+          <h4 className="text-md font-bold dark:text-white">{task.title}</h4>
+        </div>
+        <p className="text-sm text-gray-600 dark:text-neutral-500">
+          {task.description}
+        </p>
+      </div>
     </div>
   );
 };
