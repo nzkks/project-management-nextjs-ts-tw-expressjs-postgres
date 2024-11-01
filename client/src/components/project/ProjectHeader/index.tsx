@@ -7,17 +7,19 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/Header";
+import { Project } from "@/state/api";
 
 type Props = {
+  project: Project;
   activeTab: string;
   setActiveTab: (tabName: string) => void;
 };
 
-const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
+const ProjectHeader = ({ project, activeTab, setActiveTab }: Props) => {
   return (
     <div className="px-4 xl:px-6">
       <div className="pb-6 pt-6 lg:pb-4 lg:pt-8">
-        <Header name="Project Name" />
+        <Header name={project.name} />
       </div>
 
       {/* TABS */}

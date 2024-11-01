@@ -71,6 +71,10 @@ export const api = createApi({
       query: () => "projects", // "baseUrl/projects". Example: "http://localhost:8000/projects"
       providesTags: ["Projects"],
     }),
+    getProjectById: build.query<Project, { projectId: number }>({
+      query: ({ projectId }) => `projects/${projectId}`,
+      providesTags: ["Projects"],
+    }),
     getTasks: build.query<Task[], { projectId: number }>({
       query: ({ projectId }) => `tasks?projectId=${projectId}`,
       providesTags: (result) =>
@@ -93,6 +97,7 @@ export const api = createApi({
 
 export const {
   useGetProjectsQuery,
+  useGetProjectByIdQuery,
   useGetTasksQuery,
   useUpdateTaskStatusMutation,
 } = api;
