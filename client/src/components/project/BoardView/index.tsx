@@ -1,9 +1,13 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { format } from "date-fns";
-import { MessageSquareMoreIcon } from "lucide-react";
+import {
+  EllipsisVerticalIcon,
+  MessageSquareMoreIcon,
+  PlusIcon,
+} from "lucide-react";
 
 import { Task as TaskType, useUpdateTaskStatusMutation } from "@/state/api";
 
@@ -18,9 +22,10 @@ const statusColor: any = {
 
 type Props = {
   tasks: TaskType[];
+  setIsModalNewTaskOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const BoardView = ({ tasks }: Props) => {
+const BoardView = ({ tasks, setIsModalNewTaskOpen }: Props) => {
   const [updateTaskStatus] = useUpdateTaskStatusMutation();
 
   const moveTask = (taskId: number, toStatus: string) => {
@@ -36,6 +41,7 @@ const BoardView = ({ tasks }: Props) => {
             status={status}
             tasks={tasks}
             moveTask={moveTask}
+            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
           />
         ))}
       </div>
@@ -47,9 +53,15 @@ type TaskColumnProps = {
   status: string;
   tasks: TaskType[];
   moveTask: (taskId: number, toStatus: string) => void;
+  setIsModalNewTaskOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const TaskColumn = ({ status, tasks, moveTask }: TaskColumnProps) => {
+const TaskColumn = ({
+  status,
+  tasks,
+  moveTask,
+  setIsModalNewTaskOpen,
+}: TaskColumnProps) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "task",
     drop: (item: { id: number }) => moveTask(item.id, status),
@@ -82,6 +94,17 @@ const TaskColumn = ({ status, tasks, moveTask }: TaskColumnProps) => {
               {tasksCount}
             </span>
           </h3>
+          <div className="flex items-center gap-1">
+            <button className="flex h-6 w-5 items-center justify-center dark:text-neutral-500">
+              <EllipsisVerticalIcon size={26} />
+            </button>
+            <button
+              className="flex h-6 w-6 items-center justify-center rounded bg-gray-200 dark:bg-dark-tertiary dark:text-white"
+              onClick={() => setIsModalNewTaskOpen(true)}
+            >
+              <PlusIcon size={16} />
+            </button>
+          </div>
         </div>
       </div>
 

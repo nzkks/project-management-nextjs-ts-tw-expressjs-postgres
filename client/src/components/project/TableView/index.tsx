@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { Task } from "@/state/api";
 import { useAppSelector } from "@/app/redux";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
+import Header from "@/components/Header";
 
 const columns: GridColDef[] = [
   {
@@ -62,21 +63,37 @@ const columns: GridColDef[] = [
 
 type Props = {
   tasks: Task[];
+  setIsModalNewTaskOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const TableView = ({ tasks }: Props) => {
+const TableView = ({ tasks, setIsModalNewTaskOpen }: Props) => {
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
   return (
-    <div className="h-[540px] w-full px-4 pb-8 xl:px-6">
-      <div className="pt-5">Table View</div>
+    <div className="px-4 pb-8 xl:px-6">
+      <div className="pt-5">
+        <Header
+          name="Table View"
+          buttonComponent={
+            <button
+              className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
+              onClick={() => setIsModalNewTaskOpen(true)}
+            >
+              Add Task
+            </button>
+          }
+          isSmallText
+        />
+      </div>
 
-      <DataGrid
-        rows={tasks || []}
-        columns={columns}
-        className={dataGridClassNames}
-        sx={dataGridSxStyles(isDarkMode)}
-      />
+      <div className="h-[500px] w-full">
+        <DataGrid
+          rows={tasks || []}
+          columns={columns}
+          className={dataGridClassNames}
+          sx={dataGridSxStyles(isDarkMode)}
+        />
+      </div>
     </div>
   );
 };

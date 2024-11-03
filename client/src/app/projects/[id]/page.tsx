@@ -9,6 +9,7 @@ import TableView from "@/components/project/TableView";
 import ListView from "@/components/project/ListView";
 import TimelineView from "@/components/project/TimelineView";
 import BoardView from "@/components/project/BoardView";
+import ModalNewTask from "@/components/project/ModalNewTask";
 
 type Props = {
   params: { id: string };
@@ -16,6 +17,7 @@ type Props = {
 
 const Project = ({ params: { id } }: Props) => {
   const [activeTab, setActiveTab] = useState("Board");
+  const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
 
   const {
     data: project,
@@ -36,19 +38,47 @@ const Project = ({ params: { id } }: Props) => {
     return <div>An error occurred while fetching data</div>;
 
   return (
-    <div>
-      <ProjectHeader
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        project={project}
-      />
+    <>
+      <div>
+        <ProjectHeader
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          project={project}
+        />
 
-      {/* tabs content */}
-      {activeTab === "Board" && <BoardView tasks={tasks} />}
-      {activeTab === "List" && <ListView tasks={tasks} />}
-      {activeTab === "Timeline" && <TimelineView tasks={tasks} />}
-      {activeTab === "Table" && <TableView tasks={tasks} />}
-    </div>
+        {/* tabs content */}
+        {activeTab === "Board" && (
+          <BoardView
+            tasks={tasks}
+            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+          />
+        )}
+        {activeTab === "List" && (
+          <ListView
+            tasks={tasks}
+            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+          />
+        )}
+        {activeTab === "Timeline" && (
+          <TimelineView
+            tasks={tasks}
+            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+          />
+        )}
+        {activeTab === "Table" && (
+          <TableView
+            tasks={tasks}
+            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+          />
+        )}
+      </div>
+
+      <ModalNewTask
+        id={id}
+        isOpen={isModalNewTaskOpen}
+        onClose={() => setIsModalNewTaskOpen(false)}
+      />
+    </>
   );
 };
 
