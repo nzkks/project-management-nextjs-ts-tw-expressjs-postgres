@@ -45,6 +45,8 @@ const ModalNewTask = ({ id = null, isOpen, onClose }: Props) => {
       assignedUserId: parseInt(assignedUserId),
       projectId: id !== null ? Number(id) : Number(projectId),
     });
+
+    onClose();
   };
 
   const isFormValid = () => {
