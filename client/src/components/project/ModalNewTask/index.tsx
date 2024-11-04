@@ -48,7 +48,7 @@ const ModalNewTask = ({ id = null, isOpen, onClose }: Props) => {
   };
 
   const isFormValid = () => {
-    return title && authorUserId && !(id !== null || projectId);
+    return title && authorUserId && (id !== null || projectId);
   };
 
   const selectStyles =
