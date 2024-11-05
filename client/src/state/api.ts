@@ -62,6 +62,7 @@ export interface Task {
 
 export interface SearchResults {
   tasks?: Task[];
+  projects?: Project[];
 }
 
 export const api = createApi({
