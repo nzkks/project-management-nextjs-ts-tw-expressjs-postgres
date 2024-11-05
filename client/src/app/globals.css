@@ -23,3 +23,11 @@ body,
   width: 0px;
   height: 0px;
 }
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}

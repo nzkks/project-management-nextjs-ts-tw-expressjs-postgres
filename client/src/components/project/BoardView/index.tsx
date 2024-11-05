@@ -98,12 +98,17 @@ const TaskColumn = ({
             <button className="flex h-6 w-5 items-center justify-center dark:text-neutral-500">
               <EllipsisVerticalIcon size={26} />
             </button>
-            <button
-              className="flex h-6 w-6 items-center justify-center rounded bg-gray-200 dark:bg-dark-tertiary dark:text-white"
-              onClick={() => setIsModalNewTaskOpen(true)}
-            >
-              <PlusIcon size={16} />
-            </button>
+            <div className="has-tooltip">
+              <span className="tooltip -mt-8 rounded bg-gray-100 p-1 shadow-lg">
+                Create a task
+              </span>
+              <button
+                className="flex h-6 w-6 items-center justify-center rounded bg-gray-200 dark:bg-dark-tertiary dark:text-white"
+                onClick={() => setIsModalNewTaskOpen(true)}
+              >
+                <PlusIcon size={16} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -197,29 +202,46 @@ const Task = ({ task }: TaskProps) => {
         <div className="mt-3 flex items-center justify-between">
           <div className="flex -space-x-[6px] overflow-hidden">
             {task.assignee && (
-              <Image
-                src={`/${task.assignee.profilePictureUrl!}`}
-                alt={task.assignee.username}
-                width={30}
-                height={30}
-                className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
-              />
+              <div className="has-tooltip">
+                <span className="tooltip -mt-8 rounded bg-gray-100 p-1 shadow-lg">
+                  <span className="mr-1 font-bold">Task Assignee:</span>{" "}
+                  {task.assignee.username}
+                </span>
+                <Image
+                  src={`/${task.assignee.profilePictureUrl!}`}
+                  alt={task.assignee.username}
+                  width={30}
+                  height={30}
+                  className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+                />
+              </div>
             )}
             {task.author && (
-              <Image
-                src={`/${task.author.profilePictureUrl!}`}
-                alt={task.author.username}
-                width={30}
-                height={30}
-                className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
-              />
+              <div className="has-tooltip">
+                <span className="tooltip -mt-8 rounded bg-gray-100 p-1 shadow-lg">
+                  <span className="mr-1 font-bold">Task Author:</span>{" "}
+                  {task.author.username}
+                </span>
+                <Image
+                  src={`/${task.author.profilePictureUrl!}`}
+                  alt={task.author.username}
+                  width={30}
+                  height={30}
+                  className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+                />
+              </div>
             )}
           </div>
-          <div className="flex items-center text-gray-500 dark:text-neutral-500">
-            <MessageSquareMoreIcon size={20} />
-            <span className="ml-1 text-sm dark:text-neutral-400">
-              {numberOfComments}
+          <div className="has-tooltip">
+            <span className="tooltip -mt-8 rounded bg-gray-100 p-1 shadow-lg">
+              No of comments
             </span>
+            <div className="flex items-center text-gray-500 dark:text-neutral-500">
+              <MessageSquareMoreIcon size={20} />
+              <span className="ml-1 text-sm dark:text-neutral-400">
+                {numberOfComments}
+              </span>
+            </div>
           </div>
         </div>
       </div>
