@@ -38,7 +38,9 @@ const Search = () => {
         <div className="p-5">
           <div>
             {searchResults.tasks && searchResults.tasks?.length > 0 && (
-              <h2>Tasks</h2>
+              <h2 className="mb-2 mt-4 text-xl font-bold dark:text-white">
+                Tasks
+              </h2>
             )}
             {searchResults.tasks?.map((task) => (
               <TaskCard key={task.id} task={task} />
@@ -46,7 +48,9 @@ const Search = () => {
           </div>
           <div>
             {searchResults.projects && searchResults.projects?.length > 0 && (
-              <h2>Projects</h2>
+              <h2 className="mb-2 mt-4 text-xl font-bold dark:text-white">
+                Projects
+              </h2>
             )}
             {searchResults.projects?.map((project) => (
               <ProjectCard key={project.id} project={project} />
