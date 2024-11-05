@@ -16,6 +16,12 @@ export const search = async (req: Request, res: Response): Promise<void> => {
       where: {
         OR: [{ title: { contains: query as string } }, { description: { contains: query as string } }],
       },
+      include: {
+        author: true,
+        assignee: true,
+        comments: true,
+        attachments: true,
+      },
     });
 
     res.status(201).json({ projects, tasks });
