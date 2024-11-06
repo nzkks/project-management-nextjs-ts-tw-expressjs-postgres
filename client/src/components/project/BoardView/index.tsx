@@ -13,7 +13,7 @@ import { Task as TaskType, useUpdateTaskStatusMutation } from "@/state/api";
 
 const taskStatus = ["To Do", "Work In Progress", "Under Review", "Completed"];
 
-const statusColor: any = {
+const statusColor: Record<string, string> = {
   "To Do": "#2563EB",
   "Work In Progress": "#059669",
   "Under Review": "#D97706",
@@ -65,7 +65,7 @@ const TaskColumn = ({
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "task",
     drop: (item: { id: number }) => moveTask(item.id, status),
-    collect: (monitor: any) => ({
+    collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
@@ -130,7 +130,7 @@ const Task = ({ task }: TaskProps) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "task",
     item: { id: task.id },
-    collect: (monitor: any) => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
@@ -232,17 +232,19 @@ const Task = ({ task }: TaskProps) => {
               </div>
             )}
           </div>
-          <div className="has-tooltip">
-            <span className="tooltip -mt-8 rounded bg-gray-100 p-1 shadow-lg">
-              No of comments
-            </span>
-            <div className="flex items-center text-gray-500 dark:text-neutral-500">
-              <MessageSquareMoreIcon size={20} />
-              <span className="ml-1 text-sm dark:text-neutral-400">
-                {numberOfComments}
+          {numberOfComments > 0 && (
+            <div className="has-tooltip">
+              <span className="tooltip -mt-8 rounded bg-gray-100 p-1 shadow-lg">
+                {`${numberOfComments} comment${numberOfComments === 1 ? "" : "s"}`}
               </span>
+              <div className="flex items-center text-gray-500 dark:text-neutral-500">
+                <MessageSquareMoreIcon size={20} />
+                <span className="ml-1 text-sm dark:text-neutral-400">
+                  {numberOfComments}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
