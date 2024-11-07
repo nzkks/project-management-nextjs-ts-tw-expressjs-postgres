@@ -7,6 +7,7 @@ import { useSearchQuery } from "@/state/api";
 import Header from "@/components/Header";
 import TaskCard from "@/components/project/TaskCard";
 import ProjectCard from "@/components/project/ProjectCard";
+import UserCard from "@/components/UserCard";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,6 +47,7 @@ const Search = () => {
               <TaskCard key={task.id} task={task} />
             ))}
           </div>
+
           <div>
             {searchResults.projects && searchResults.projects?.length > 0 && (
               <h2 className="mb-2 mt-4 text-xl font-bold dark:text-white">
@@ -54,6 +56,17 @@ const Search = () => {
             )}
             {searchResults.projects?.map((project) => (
               <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+
+          <div>
+            {searchResults.users && searchResults.users?.length > 0 && (
+              <h2 className="mb-2 mt-4 text-xl font-bold dark:text-white">
+                Users
+              </h2>
+            )}
+            {searchResults.users?.map((user) => (
+              <UserCard key={user.userId} user={user} />
             ))}
           </div>
         </div>

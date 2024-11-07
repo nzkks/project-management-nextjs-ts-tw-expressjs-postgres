@@ -63,6 +63,7 @@ export interface Task {
 export interface SearchResults {
   tasks?: Task[];
   projects?: Project[];
+  users?: User[];
 }
 
 export interface Team {
