@@ -43,6 +43,11 @@ const columns: GridColDef[] = [
       </div>
     ),
   },
+  {
+    field: "teamName",
+    headerName: "Team Name",
+    width: 200,
+  },
 ];
 
 const Users = () => {
