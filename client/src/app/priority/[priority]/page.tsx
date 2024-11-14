@@ -12,6 +12,7 @@ import TableView from "@/components/project/TableView";
 
 const Priority = () => {
   const [activeTab, setActiveTab] = useState("List");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
 
   const params = useParams<{ tag: string; priority: string }>();
